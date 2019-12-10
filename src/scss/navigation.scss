@@ -1,0 +1,95 @@
+#nav {
+  @include positionFixed(0, 0, auto, 0, 500);
+  @include flex(row, center, space-between);
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  background: rgba(178, 190, 181, 0.3);
+  a {
+    font-weight: bold;
+    color: #fff;
+    @include easeOut(all, 0.4s);
+    &#logo {
+      background: rgba($logo-color, 0.8);
+      text-decoration: none;
+      @include flex(row, center, flex-start);
+      p {
+        margin: 2px;
+        font-size: 16px;
+        color: $secondary-color;
+      }
+    }
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+    &:hover {
+      color: #42b983;
+    }
+  }
+  #navigation {
+    @include flex(row, center, center);
+    @include easeOut(all, 50s);
+
+    &.active {
+      a {
+        color: #fff;
+        @include easeOut(all, 0.3s);
+        &.router-link-exact-active,
+        &:hover {
+          color: #42b983;
+        }
+      }
+      #responsiveNavigation {
+        @include positionFixed(0, 0, 0, 0, 200);
+        background: $secondary-color;
+        opacity: 0.8;
+        @include for-tablet-landscape-up {
+          position: relative;
+          background: transparent;
+          opacity: 1;
+        }
+      }
+      #navbutton {
+        border: 1px solid #fff;
+        #navButtonLine {
+          background: #fff;
+        }
+      }
+    }
+    a {
+      margin: 0 10px;
+    }
+    #responsiveNavigation {
+      height: 100vh;
+      @include positionFixed(-100%, 0, 0, 0, 200);
+      @include easeOut(all, 0.3s);
+      @include flex(column, center, space-around);
+      @include for-tablet-landscape-up {
+        height: 100%;
+        position: relative;
+        @include flex(row, center, center);
+      }
+    }
+    #navbutton {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #fff;
+      margin-right: 10px;
+      z-index: 500;
+      cursor: pointer;
+      @include flex(column, center, space-around);
+      @include easeOut(all, 0.3s);
+      @include for-tablet-landscape-up {
+        display: none;
+      }
+      #navButtonLine {
+        height: 5px;
+        width: 40px;
+        background: #fff;
+      }
+      &:hover {
+        background: $logo-color;
+      }
+    }
+  }
+}
