@@ -1,0 +1,19 @@
+@mixin flex($direction, $align, $justify) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin positionFixed($top, $right, $bottom, $left, $zIndex) {
+  position: fixed;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
+  z-index: $zIndex;
+}
+
+@mixin easeOut($item, $timeout) {
+  transition: $item $timeout ease-out;
+}
