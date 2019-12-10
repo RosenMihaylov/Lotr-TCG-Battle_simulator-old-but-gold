@@ -1,6 +1,8 @@
 <template>
   <div id="home">
-    <h2>Hello</h2>
+    <div id="dialogue">
+      <h2>Hello</h2>
+    </div>
   </div>
 </template>
 
@@ -18,5 +20,7 @@ export default {
 #home {
   @include flex(column, center, center);
   height: 100vh;
+  max-width: 1200px;
+  margin: auto;
 }
 </style>
