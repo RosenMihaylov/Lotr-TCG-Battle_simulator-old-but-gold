@@ -11,7 +11,7 @@
           <router-link to="/tutorial">Tutorial</router-link> |
           <router-link to="/battleSimulation">Battle Simulation</router-link>
         </div>
-        <div id="navbutton" @click="openMenu">
+        <div id="navButton" @click="openMenu">
           <div id="navButtonLine"></div>
           <div id="navButtonLine"></div>
           <div id="navButtonLine"></div>
