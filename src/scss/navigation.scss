@@ -3,7 +3,7 @@
   @include flex(row, center, space-between);
   width: 100%;
   max-width: 1200px;
-  margin: 30px auto;
+  height: 100px;
   background: rgba(178, 190, 181, 0.3);
   a {
     font-weight: bold;
@@ -74,7 +74,7 @@
       width: 50px;
       height: 50px;
       border: 1px solid #fff;
-      margin-right: 10px;
+      margin-right: 2px;
       z-index: 500;
       cursor: pointer;
       @include flex(column, center, space-around);

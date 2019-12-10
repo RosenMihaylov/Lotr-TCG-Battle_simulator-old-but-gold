@@ -1,3 +1,5 @@
+$calcSizeMinusNav: calc(100% - 100px);
+
 @mixin flex($direction, $align, $justify) {
   display: flex;
   flex-direction: $direction;
@@ -16,4 +18,12 @@
 
 @mixin easeOut($item, $timeout) {
   transition: $item $timeout ease-out;
+}
+
+@mixin absolutePosition($top, $right, $bottom, $left) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
 }

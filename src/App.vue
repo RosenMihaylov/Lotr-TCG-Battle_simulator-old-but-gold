@@ -63,14 +63,12 @@ export default {
   background: darken($primary-color, 5);
 }
 .screen {
-  @include flex(column, center, flex-end);
+  @include flex(column, center, center);
   width: 100%;
   height: 100%;
-
+  background: rgba($secondary-color, 0.5);
   .dialogue {
     background: darken(rgba($logo-color, 0.5), 50);
-    // height: 75vh;
-    // width: 80vw;
     height: 100%;
     width: 100%;
     max-width: 1200px;

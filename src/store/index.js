@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default ({
   state: {
+
   },
   mutations: {
+
   },
   actions: {
+
   },
-  modules: {
+  getters: {
+
   }
 })
