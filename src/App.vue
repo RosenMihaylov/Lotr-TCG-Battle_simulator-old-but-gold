@@ -65,12 +65,14 @@ export default {
   @include flex(column, center, flex-end);
   width: 100%;
   height: 100%;
+
   .dialogue {
     background: darken(rgba($logo-color, 0.5), 50);
     // height: 75vh;
     // width: 80vw;
     height: 100%;
     width: 100%;
+    max-width: 1200px;
     @include flex(column, center, center);
     text-align: center;
     grid-template-columns: 1fr 1fr;
@@ -92,7 +94,7 @@ export default {
     h2 {
       color: $gold;
       margin-bottom: 20px;
-      font-size: 6.5vw;
+      font-size: 8.5vw;
     }
     p,
     li,
@@ -101,13 +103,30 @@ export default {
       margin-bottom: 10px;
       font-size: 6.5vw;
     }
+    @include for-tablet-portrait-up {
+      h1,
+      h2 {
+        font-size: 5.5vw;
+      }
+      p,
+      li,
+      .button {
+        font-size: 1rem;
+      }
+      .dialogueNavigation {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
     @include for-tablet-landscape-up {
       height: 75vh;
-      width: 80vw;
+      max-width: 1200px;
 
       .dialogueNavigation {
         grid-template-columns: 1fr 1fr;
       }
+    }
+    @include for-desktop-up {
       h1,
       h2 {
         font-size: 2rem;

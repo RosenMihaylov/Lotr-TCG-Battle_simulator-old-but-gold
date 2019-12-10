@@ -63,7 +63,7 @@
       height: 100vh;
       @include positionFixed(-100%, 0, 0, 0, 200);
       @include easeOut(all, 0.3s);
-      @include flex(column, center, space-around);
+      @include flex(column, center, center);
       @include for-tablet-landscape-up {
         height: 100%;
         position: relative;
