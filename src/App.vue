@@ -52,13 +52,14 @@ export default {
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
-  width: 100vw;
+
   background: darken($primary-color, 5);
 }
 .screen {
@@ -78,7 +79,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     .dialogueNavigation {
       display: grid;
-      width: 100%;
+      width: calc(100% - 2px);
       grid-template-columns: 1fr;
       border: 1px solid $primary-color;
       background: darken(rgba($primary-color, 0.8), 50);
