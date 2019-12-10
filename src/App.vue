@@ -73,7 +73,7 @@ export default {
     width: 100%;
     @include flex(column, center, center);
     text-align: center;
-
+    grid-template-columns: 1fr 1fr;
     .dialogueNavigation {
       display: grid;
       width: 100%;
@@ -104,6 +104,10 @@ export default {
     @include for-tablet-landscape-up {
       height: 75vh;
       width: 80vw;
+
+      .dialogueNavigation {
+        grid-template-columns: 1fr 1fr;
+      }
       h1,
       h2 {
         font-size: 2rem;
