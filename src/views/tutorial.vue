@@ -9,7 +9,12 @@
               <h2>
                 {{ slideText.title }}
               </h2>
-              <h3>Name: {{ slideText.name }}</h3>
+
+              <ul>
+                <li v-for="(data, d) in slideText.data" :key="d">
+                  {{ data }}
+                </li>
+              </ul>
             </div>
           </div>
           <div id="slideNavigation">
@@ -61,26 +66,23 @@ export default {
       text: [
         {
           title: "This is a Companion",
-          name: "Aragorn",
-          cost: 4
+          data: ["name: Aragorn", "cost: 4"]
         },
         {
           title: "This is a Minion",
-          name: " Ulaire Enquea, Lieutenant of Morgul",
-          cost: 4
+          data: ["name: Enquea", "cost:6"]
         },
         {
           title: "This is Melee weapon",
-          name: "Ranger`s sword",
-          cost: 1
+          data: ["name: Ramger`s Sword", "cost:1"]
         },
         {
           title: "This is a ranged weapon",
-          name: "Aragorn`s Bow"
+          data: ["name: Aragorn`s Bow", "cost:1"]
         },
         {
           title: "This is an Event",
-          name: "A Ranger`s Versatility"
+          data: ["name: A Ranger`s Versatility", "cost:1"]
         }
       ]
     };
