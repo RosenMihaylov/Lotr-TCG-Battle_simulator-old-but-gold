@@ -4,6 +4,13 @@
       <div class="dialogue">
         <div class="bubble">
           <div class="slideWindow">
+            <button
+              id="slideLeft"
+              v-if="this.activeSlide > 1"
+              @click="goToPrevSlide"
+            >
+              &#8810;
+            </button>
             <img :src="selectImage(image)" alt="aragorn" title="aragorn" />
             <div class="conversation">
               <h2>
@@ -16,33 +23,13 @@
                 </li>
               </ul>
             </div>
-          </div>
-          <div id="slideNavigation">
-            <div
-              class="circle"
-              v-bind:class="[this.activeSlide === 1 ? 'active' : '']"
-              @click="selectSlide1"
-            ></div>
-            <div
-              class="circle"
-              v-bind:class="[this.activeSlide === 2 ? 'active' : '']"
-              @click="selectSlide2"
-            ></div>
-            <div
-              class="circle"
-              v-bind:class="[this.activeSlide === 3 ? 'active' : '']"
-              @click="selectSlide3"
-            ></div>
-            <div
-              class="circle"
-              v-bind:class="[this.activeSlide === 4 ? 'active' : '']"
-              @click="selectSlide4"
-            ></div>
-            <div
-              class="circle"
-              v-bind:class="[this.activeSlide === 5 ? 'active' : '']"
-              @click="selectSlide5"
-            ></div>
+            <button
+              id="slideRight"
+              @click="goToNextSlide(10)"
+              v-if="this.activeSlide < this.slideShow.length"
+            >
+              &#8811;
+            </button>
           </div>
         </div>
       </div>
@@ -63,7 +50,7 @@ export default {
         "aragornsBow.jpg",
         "aRangersVersatility.jpg"
       ],
-      text: [
+      slideShow: [
         {
           title: "This is a Companion",
           data: [
@@ -141,32 +128,28 @@ export default {
     };
   },
   methods: {
-    selectSlide1() {
-      this.activeSlide = 1;
-    },
-    selectSlide2() {
-      this.activeSlide = 2;
-    },
-    selectSlide3() {
-      this.activeSlide = 3;
-    },
-    selectSlide4() {
-      this.activeSlide = 4;
-    },
-    selectSlide5() {
-      this.activeSlide = 5;
-    },
     selectImage(image) {
       if (image) {
         const slideNumber = this.activeSlide - 1;
         return require("../assets/" + image[slideNumber]);
       }
+    },
+    goToNextSlide() {
+      const number = this.slideShow.length - this.activeSlide;
+      if (number >= 1) {
+        this.activeSlide += 1;
+      } else return;
+    },
+    goToPrevSlide() {
+      if (this.activeSlide > 1) {
+        this.activeSlide -= 1;
+      } else return;
     }
   },
   computed: {
     slideText() {
       const slideNumber = this.activeSlide - 1;
-      return this.text[slideNumber];
+      return this.slideShow[slideNumber];
     }
   }
 };
@@ -185,6 +168,7 @@ export default {
     background: url("../assets/tutorialBg.jpg") center center;
     @include flex(column, center, flex-end);
     height: 100%;
+
     .dialogue {
       position: relative;
       height: $calcSizeMinusNav;
@@ -224,6 +208,10 @@ export default {
           justify-content: flex-start;
           align-items: center;
           flex-direction: row;
+          button {
+            margin: 0 5px;
+            font-size: 2rem;
+          }
           img {
             margin-right: 5px;
             height: 25vh;
