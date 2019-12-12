@@ -25,7 +25,7 @@
             </div>
             <button
               id="slideRight"
-              @click="goToNextSlide(10)"
+              @click="goToNextSlide"
               v-if="this.activeSlide < this.slideShow.length"
             >
               &#8811;
@@ -46,82 +46,75 @@ export default {
       image: [
         "aragornCard.jpg",
         "enqueaCard.jpg",
-        "rangersSword.jpg",
         "aragornsBow.jpg",
-        "aRangersVersatility.jpg"
+        "aRangersVersatility.jpg",
+        "rangersSword.jpg",
+        "paleBlade.jpg"
       ],
       slideShow: [
         {
-          title: "This is a Companion",
+          title: "Fellowship phase",
           data: [
-            "name: Aragorn",
-            "Culture:	Gondor",
-            "Twilight cost:	4",
-            "Card Type:	Companion • Man",
-            "Strength:	8",
-            "Vitality:	4",
-            "Game Text:	Ranger. Maneuver: Exert Aragorn to make him defender +1 until the regroup phase.",
-            "Companions can be played during the Fellowship phase.",
-            "There can be up to 9, and if one is dead, you can`t play them again",
-            "The twilight cost is added to the twilight pool, to be used by the opponent"
+            "You can Chose your Companion",
+            "You can equip 1 melee weapon and 1 Ranged weapon",
+            "The cost of those cards is added to the twilight pool"
           ]
         },
         {
-          title: "This is a Minion",
+          title: "Shadow phase",
           data: [
-            "Name: Enquea",
-            "Culture:	Wraith",
-            "Twilight cost:	6",
-            "Card Type:	Minion • Nazgul",
-            "Strength:	11",
-            "Vitality:	4",
-            "Site:	3",
-            "Game Text:	Fierce. Maneuver: Spot 6 companions (or 5 burdens) and exert Ulaire Enquea to wound a companion (except the Ring-bearer).",
-            "Minions can be played during the shadow phase.",
-            "There is no limit as long as you have enough twilight in the twilight pool",
-            "The twilight cost is substracted to the twilight pool"
+            "The shadow player can play Minions",
+            "The shadow player can equip 1 melee and 1 ranged weapon",
+            "The cost is reduced from the twilight pool.",
+            "The twilight pool can`t be negative"
           ]
         },
         {
-          title: "This is Melee weapon",
+          title: "Maneuver phase",
           data: [
-            "Name: Ramger`s Sword",
-            "Culture:	Gondor",
-            "Twilight cost:	1",
-            "Card Type:	Possession • Hand Weapon",
-            "Strength:	+2",
-            "Game Text:	Bearer must be Aragorn. He is damage +1.",
-            "Every character can have only 1 melee weapon, unless the game text specifies something else",
-            "Weapons for the companions can be played during the Fellowship phase on the appropriate companion. They add to the twilight pool.",
-            "Weapons for the Minions can be played during the shadow phase on the appropriate minion. They substract from the twilight pool"
+            "Players take turns to use manewver skills",
+            "First is the fellowship player",
+            "The rule for the twilight pool stays the same",
+            "If at any point a side reaches 0 strenght or 0 vitality they lose the game",
+            "This phase is skipped if neither side has manewver skills"
           ]
         },
         {
-          title: "This is a ranged weapon",
+          title: "Archery phase",
           data: [
-            "Name: Aragorn`s Bow",
-            "Culture:	Gondor",
-            "Twilight cost:	1",
-            "Card Type:	Possession • Ranged Weapon",
-            "Game Text:	Bearer must be Aragorn. He is an archer. Archery: Exert Aragorn to wound a minion; if you use the skill Aragorn does not add to the fellowship archery total.",
-            "Every character can have only 1 ranged weapon",
-            "Weapons for the companions can be played during the Fellowship phase on the appropriate companion. They add to the twilight pool.",
-            "Weapons for the Minions can be played during the shadow phase on the appropriate minion. They substract from the twilight pool"
+            "Players take turns to use Archery skills",
+            "First is the fellowship player",
+            "The rule for the twilight pool stays the same",
+            "If at any point a side reaches 0 strenght or 0 vitality they lose the game",
+            "This phase is skipped if neither side has Archery skills",
+            "After all the skills are used, if there are shots left - they reduce opposing vitality"
           ]
         },
         {
-          title: "This is an Event",
+          title: "Battle phase",
           data: [
-            "Name: A Ranger`s Versatility",
-            "Type: Fellowship",
-            "Culture:	Gondor",
-            "Twilight cost:	1",
-            "Card Type:	Event",
-            "Game Text:	Maneuver: Exert a ranger at a river or forest to exhaust a minion.",
-            "Events can be played during the phase - specified in the game text.",
-            "Unlike the other cards, events apply effects and do not stay on the field",
-            "Fellowship events add to the twilight pool",
-            "Shadow events substract from the twilight pool"
+            "Players take turns to use Battle skills",
+            "First is the fellowship player",
+            "If at any point a side reaches 0 strenght or 0 vitality they lose the game",
+            "After all the skills are used the battle commence",
+            "If any side has strenght 2 times more than the opponent - the opponent is dead",
+            "If the companion has more strenght - the minion takes damage equal to the critical of the companion",
+            "If the minion has more or equal strenght - the companion takes damage equal to the critical of the minion",
+            "If after the battle both sides are alive and the minion has fierce skill - starts the fierce battle phase",
+            "If both sides are alive, or the minion is dead - you win the game"
+          ]
+        },
+        {
+          title: "Fierce Battle phase",
+          data: [
+            "Players take turns to use Battle skills",
+            "First is the fellowship player",
+            "If at any point a side reaches 0 strenght or 0 vitality they lose the game",
+            "After all the skills are used the battle commence",
+            "If any side has strenght 2 times more than the opponent - the opponent is dead",
+            "If the companion has more strenght - the minion takes damage equal to the critical of the companion",
+            "If the minion has more or equal strenght - the companion takes damage equal to the critical of the minion",
+            "If both sides are alive, or the minion is dead - you win the game"
           ]
         }
       ]
