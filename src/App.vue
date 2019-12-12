@@ -65,17 +65,15 @@ export default {
 .screen {
   @include flex(column, center, center);
   width: 100%;
-  height: 100%;
-  background: rgba($secondary-color, 0.5);
 
   .dialogue {
-    background: darken(rgba($logo-color, 0.5), 50);
-    height: 100%;
+    background: darken(rgba($logo-color, 0.8), 50);
+    height: 100vh;
     width: 100%;
     max-width: 1200px;
     @include flex(column, center, center);
     text-align: center;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 3fr;
     .dialogueNavigation {
       display: grid;
       width: calc(100% - 2px);
@@ -106,7 +104,7 @@ export default {
     @include for-tablet-portrait-up {
       h1,
       h2 {
-        font-size: 5.5vw;
+        font-size: 5.5vh;
       }
       p,
       li,

@@ -66,23 +66,76 @@ export default {
       text: [
         {
           title: "This is a Companion",
-          data: ["name: Aragorn", "cost: 4"]
+          data: [
+            "name: Aragorn",
+            "Culture:	Gondor",
+            "Twilight cost:	4",
+            "Card Type:	Companion • Man",
+            "Strength:	8",
+            "Vitality:	4",
+            "Game Text:	Ranger. Maneuver: Exert Aragorn to make him defender +1 until the regroup phase.",
+            "Companions can be played during the Fellowship phase.",
+            "There can be up to 9, and if one is dead, you can`t play them again",
+            "The twilight cost is added to the twilight pool, to be used by the opponent"
+          ]
         },
         {
           title: "This is a Minion",
-          data: ["name: Enquea", "cost:6"]
+          data: [
+            "Name: Enquea",
+            "Culture:	Wraith",
+            "Twilight cost:	6",
+            "Card Type:	Minion • Nazgul",
+            "Strength:	11",
+            "Vitality:	4",
+            "Site:	3",
+            "Game Text:	Fierce. Maneuver: Spot 6 companions (or 5 burdens) and exert Ulaire Enquea to wound a companion (except the Ring-bearer).",
+            "Minions can be played during the shadow phase.",
+            "There is no limit as long as you have enough twilight in the twilight pool",
+            "The twilight cost is substracted to the twilight pool"
+          ]
         },
         {
           title: "This is Melee weapon",
-          data: ["name: Ramger`s Sword", "cost:1"]
+          data: [
+            "Name: Ramger`s Sword",
+            "Culture:	Gondor",
+            "Twilight cost:	1",
+            "Card Type:	Possession • Hand Weapon",
+            "Strength:	+2",
+            "Game Text:	Bearer must be Aragorn. He is damage +1.",
+            "Every character can have only 1 melee weapon, unless the game text specifies something else",
+            "Weapons for the companions can be played during the Fellowship phase on the appropriate companion. They add to the twilight pool.",
+            "Weapons for the Minions can be played during the shadow phase on the appropriate minion. They substract from the twilight pool"
+          ]
         },
         {
           title: "This is a ranged weapon",
-          data: ["name: Aragorn`s Bow", "cost:1"]
+          data: [
+            "Name: Aragorn`s Bow",
+            "Culture:	Gondor",
+            "Twilight cost:	1",
+            "Card Type:	Possession • Ranged Weapon",
+            "Game Text:	Bearer must be Aragorn. He is an archer. Archery: Exert Aragorn to wound a minion; if you use the skill Aragorn does not add to the fellowship archery total.",
+            "Every character can have only 1 ranged weapon",
+            "Weapons for the companions can be played during the Fellowship phase on the appropriate companion. They add to the twilight pool.",
+            "Weapons for the Minions can be played during the shadow phase on the appropriate minion. They substract from the twilight pool"
+          ]
         },
         {
           title: "This is an Event",
-          data: ["name: A Ranger`s Versatility", "cost:1"]
+          data: [
+            "Name: A Ranger`s Versatility",
+            "Type: Fellowship",
+            "Culture:	Gondor",
+            "Twilight cost:	1",
+            "Card Type:	Event",
+            "Game Text:	Maneuver: Exert a ranger at a river or forest to exhaust a minion.",
+            "Events can be played during the phase - specified in the game text.",
+            "Unlike the other cards, events apply effects and do not stay on the field",
+            "Fellowship events add to the twilight pool",
+            "Shadow events substract from the twilight pool"
+          ]
         }
       ]
     };
@@ -104,8 +157,10 @@ export default {
       this.activeSlide = 5;
     },
     selectImage(image) {
-      const slideNumber = this.activeSlide - 1;
-      return require("../assets/" + image[slideNumber]);
+      if (image) {
+        const slideNumber = this.activeSlide - 1;
+        return require("../assets/" + image[slideNumber]);
+      }
     }
   },
   computed: {
@@ -123,12 +178,13 @@ export default {
 @import "../scss/responsive";
 
 #tutorial {
-  background: url("../assets/tutorialBg.jpg") center center;
   background-size: cover;
   width: 100%;
   height: 100%;
   .screen {
+    background: url("../assets/tutorialBg.jpg") center center;
     @include flex(column, center, flex-end);
+    height: 100%;
     .dialogue {
       position: relative;
       height: $calcSizeMinusNav;
@@ -141,8 +197,9 @@ export default {
         @include absolutePosition(0, 5%, 0, 0);
         h2 {
           text-align: center;
-          font-size: 1.5rem;
+          font-size: 3vh;
         }
+
         #slideNavigation {
           position: absolute;
           bottom: 0;
@@ -162,27 +219,33 @@ export default {
           }
         }
         .slideWindow {
-          @include absolutePosition(5px, 1rem, 1rem, 1rem);
+          @include absolutePosition(5px, 0, 0, 0);
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          flex-direction: column;
-
+          flex-direction: row;
           img {
-            height: 40%;
+            margin-right: 5px;
+            height: 25vh;
           }
           .conversation {
             text-align: left;
-            flex: 1;
+            flex: 4;
             li {
               list-style: none;
+              font-size: 2vh;
             }
           }
           @include for-tablet-landscape-up {
-            flex-direction: row;
             img {
               height: 80%;
               margin-right: 20px;
+            }
+            h2 {
+              font-size: 2rem;
+            }
+            .conversation li {
+              font-size: 1rem;
             }
           }
         }
