@@ -2,25 +2,14 @@
   <div id="tutorial">
     <div class="screen">
       <div class="dialogue">
-        <img
-          src="../assets/aragornTutorialDialogue.png"
-          alt="aragorn"
-          title="aragorn"
-          id="npc"
-        />
-
         <div class="bubble">
           <div class="slideWindow">
-            <img src="../assets/aragornCard.jpg" alt="card of aragorn" />
+            <img :src="selectImage(image)" alt="aragorn" title="aragorn" />
             <div class="conversation">
-              <h3>This is a companion</h3>
-              <ul>
-                <li>Name: Aragorn</li>
-                <li>Strenght: 8</li>
-                <li>Vitality: 4</li>
-                <li>Strong, but costs much to equip his weapons.</li>
-                <li>Battle skill: +2 strenght against Sauron</li>
-              </ul>
+              <h2>
+                {{ slideText.title }}
+              </h2>
+              <h3>Name: {{ slideText.name }}</h3>
             </div>
           </div>
           <div id="slideNavigation">
@@ -39,6 +28,16 @@
               v-bind:class="[this.activeSlide === 3 ? 'active' : '']"
               @click="selectSlide3"
             ></div>
+            <div
+              class="circle"
+              v-bind:class="[this.activeSlide === 4 ? 'active' : '']"
+              @click="selectSlide4"
+            ></div>
+            <div
+              class="circle"
+              v-bind:class="[this.activeSlide === 5 ? 'active' : '']"
+              @click="selectSlide5"
+            ></div>
           </div>
         </div>
       </div>
@@ -51,7 +50,39 @@ export default {
   name: "tutorial",
   data() {
     return {
-      activeSlide: 1
+      activeSlide: 1,
+      image: [
+        "aragornCard.jpg",
+        "enqueaCard.jpg",
+        "rangersSword.jpg",
+        "aragornsBow.jpg",
+        "aRangersVersatility.jpg"
+      ],
+      text: [
+        {
+          title: "This is a Companion",
+          name: "Aragorn",
+          cost: 4
+        },
+        {
+          title: "This is a Minion",
+          name: " Ulaire Enquea, Lieutenant of Morgul",
+          cost: 4
+        },
+        {
+          title: "This is Melee weapon",
+          name: "Ranger`s sword",
+          cost: 1
+        },
+        {
+          title: "This is a ranged weapon",
+          name: "Aragorn`s Bow"
+        },
+        {
+          title: "This is an Event",
+          name: "A Ranger`s Versatility"
+        }
+      ]
     };
   },
   methods: {
@@ -63,6 +94,22 @@ export default {
     },
     selectSlide3() {
       this.activeSlide = 3;
+    },
+    selectSlide4() {
+      this.activeSlide = 4;
+    },
+    selectSlide5() {
+      this.activeSlide = 5;
+    },
+    selectImage(image) {
+      const slideNumber = this.activeSlide - 1;
+      return require("../assets/" + image[slideNumber]);
+    }
+  },
+  computed: {
+    slideText() {
+      const slideNumber = this.activeSlide - 1;
+      return this.text[slideNumber];
     }
   }
 };
@@ -83,15 +130,6 @@ export default {
     .dialogue {
       position: relative;
       height: $calcSizeMinusNav;
-      #npc {
-        display: none;
-        @include for-tablet-landscape-up {
-          display: block;
-          @include absolutePosition(auto, auto, 0, 5px);
-          max-height: 80%;
-          max-width: 20%;
-        }
-      }
       .bubble {
         background: rgba(#fff, 0.5);
         width: 100%;
@@ -99,12 +137,9 @@ export default {
         display: flex;
         justify-content: center;
         @include absolutePosition(0, 5%, 0, 0);
-        @include for-tablet-landscape-up {
-          max-width: 75%;
-          max-height: 80%;
-          border-radius: 35px;
-          left: auto;
-          top: 10%;
+        h2 {
+          text-align: center;
+          font-size: 1.5rem;
         }
         #slideNavigation {
           position: absolute;
@@ -136,6 +171,7 @@ export default {
           }
           .conversation {
             text-align: left;
+            flex: 1;
             li {
               list-style: none;
             }

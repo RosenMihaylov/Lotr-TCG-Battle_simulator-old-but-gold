@@ -67,6 +67,7 @@ export default {
   width: 100%;
   height: 100%;
   background: rgba($secondary-color, 0.5);
+
   .dialogue {
     background: darken(rgba($logo-color, 0.5), 50);
     height: 100%;
