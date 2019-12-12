@@ -2,39 +2,69 @@
   <div id="battleSimulation">
     <h2>This is a battle simulation</h2>
     <div id="batttleScreen">
-      <div id="companion" class="fighterInfo">
-        <h5>Here You can see your Companion</h5>
-        <div class="fighterPicture">
-          Here Will be his picture
+      <div id="battleScreenLeftSide">
+        <div id="companion" class="fighterInfo" v-if="currentPhase > 1">
+          <h5>Here You can see your Companion</h5>
+          <div class="fighterPicture">
+            Here Will be his picture
+          </div>
+          <ul>
+            <li>
+              Strenght:
+              <span class="green">
+                {{ selectedCompanion.Strenght }}
+              </span>
+            </li>
+            <li>
+              Vitality:
+              <span class="red"> {{ selectedCompanion.Vitality }}</span>
+            </li>
+          </ul>
         </div>
-        <ul>
-          <li>
-            Strenght:
-            <span class="green">
-              {{ selectedCompanion.Strenght }}
-            </span>
-          </li>
-          <li>
-            Vitality:
-            {{ selectedCompanion.Vitality }}
-          </li>
-        </ul>
       </div>
       <div id="battleSimulationCommandButtons">
         <h3>
           Twilight:
-          <span>{{ twilight }}</span>
+          <span class="green">{{ twilight }}</span>
         </h3>
         <div id="commands">
-          <h5>Battle Commands</h5>
-          <button class="button">Battle Start</button>
-          <button class="button">Reset</button>
+          <button
+            class="button"
+            v-if="currentPhase === ''"
+            @click="startSimulation"
+          >
+            Start Simulation
+          </button>
+          <button class="button" v-else-if="currentPhase === 'fellowship'">
+            Select a Companion
+          </button>
+          <button
+            v-if="currentPhase !== ''"
+            class="button"
+            @click="resetSimulation"
+          >
+            Reset Simulation
+          </button>
         </div>
       </div>
-      <div id="minion" class="fighterInfo">
-        <h5>Here You can see your Minion</h5>
-        <div class="fighterPicture">
-          Here Will be his picture
+      <div id="battleScreenRightSide">
+        <div id="minion" class="fighterInfo" v-if="currentPhase > 2">
+          <h5>Here You can see your Minion</h5>
+          <div class="fighterPicture">
+            Here Will be his picture
+          </div>
+          <ul>
+            <li>
+              Strenght:
+              <span class="green">
+                {{ selectedMinion.Strenght }}
+              </span>
+            </li>
+            <li>
+              Vitality:
+              <span class="red"> {{ selectedMinion.Vitality }}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -46,6 +76,7 @@ export default {
   name: "battleSimulation",
   data() {
     return {
+      currentPhase: "",
       phases: {
         1: "Fellowhip",
         2: "Shadow",
@@ -78,6 +109,14 @@ export default {
         RangedWeapon: ""
       }
     };
+  },
+  methods: {
+    startSimulation() {
+      this.currentPhase = "fellowship";
+    },
+    resetSimulation() {
+      this.currentPhase = "";
+    }
   }
 };
 </script>
@@ -94,14 +133,15 @@ export default {
   text-align: center;
   #batttleScreen {
     width: 100%;
-    height: 60%;
+    height: 100%;
     background: darken(#fff, 20);
-    display: grid;
-    grid-template-columns: 4fr 1fr 4fr;
+    display: flex;
     #battleSimulationCommandButtons {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 1;
       button {
         width: 100%;
         font-size: 16px;
@@ -123,11 +163,13 @@ export default {
         }
       }
     }
-    #minion {
+    #battleScreenRightSide {
       background: darkcyan;
+      flex: 2;
     }
-    #companion {
+    #battleScreenLeftSide {
       background: lightcyan;
+      flex: 2;
     }
     ul {
       width: 100%;
