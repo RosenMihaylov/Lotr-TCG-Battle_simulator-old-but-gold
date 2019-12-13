@@ -10,9 +10,9 @@
           </div>
           <ul>
             <li>
-              Strenght:
+              strenght:
               <span class="green">
-                {{ selectedCompanion.Strenght }}
+                {{ selectedCompanion.strenght }}
               </span>
             </li>
             <li>
@@ -55,9 +55,9 @@
           </div>
           <ul>
             <li>
-              Strenght:
+              strenght:
               <span class="green">
-                {{ selectedMinion.Strenght }}
+                {{ selectedMinion.strenght }}
               </span>
             </li>
             <li>
@@ -88,7 +88,7 @@ export default {
       twilight: 0,
       selectedCompanion: {
         image: "",
-        Strenght: 0,
+        strenght: 0,
         Vitality: 0,
         FellowshipSkill: "",
         ManeuverSkill: "",
@@ -99,7 +99,7 @@ export default {
       },
       selectedMinion: {
         image: "",
-        Strenght: 0,
+        strenght: 0,
         Vitality: 0,
         ShadowSkill: "",
         ManeuverSkill: "",

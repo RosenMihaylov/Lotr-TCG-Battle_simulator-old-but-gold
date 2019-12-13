@@ -5,6 +5,12 @@
         <img alt="logo" src="./assets/fenix-logo.png" title="logo" />
         <p>LOTR TCG Battle Simulator</p>
       </a>
+      <a
+        href="https://github.com/RosenMihaylov/Lotr-TCG-Battle_simulator"
+        target="_blank"
+        class="git"
+        >Link to github</a
+      >
       <div id="navigation" :class="{ active: active }">
         <div id="responsiveNavigation">
           <router-link to="/">Home</router-link> |
@@ -134,6 +140,16 @@ export default {
       .button {
         font-size: 1rem;
       }
+    }
+  }
+  .git {
+    text-decoration: none;
+    color: #42b983;
+
+    @include easeOut(all, 0.3s);
+
+    &:hover {
+      color: darken(#42b983, 50);
     }
   }
 }
