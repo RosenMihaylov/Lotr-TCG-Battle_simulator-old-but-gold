@@ -20,6 +20,10 @@
                 Vitality:
                 {{ companion.vitality }}
               </p>
+              <p>
+                Twilight:
+                {{ companion.twilight }}
+              </p>
             </div>
             <button
               class="button"
@@ -47,14 +51,17 @@
           <ul>
             <li>
               Strenght:
-              {{ selectedCompanionStrength }}
+              <span class="green">{{ selectedCompanionStrength }}</span>
             </li>
             <li>
               Vitality:
-              {{ selectedCompanionVitality }}
+              <span class="red"> {{ selectedCompanionVitality }}</span>
             </li>
           </ul>
         </div>
+        <button v-if="currentPhase === 2" @click="nextPhase">
+          Select the Oponnent
+        </button>
       </div>
       <div id="battleSimulationCommandButtons">
         <h3>
@@ -67,21 +74,7 @@
           </button>
 
           <button
-            class="button"
-            v-else-if="currentPhase === '2'"
-            @click="nextPhase"
-          >
-            Select his Items
-          </button>
-          <button
-            class="button"
-            v-else-if="currentPhase === '3'"
-            @click="nextPhase"
-          >
-            Select his Items
-          </button>
-          <button
-            v-if="currentPhase !== ''"
+            v-if="currentPhase !== 0"
             class="button"
             @click="resetSimulation"
           >
@@ -90,18 +83,21 @@
         </div>
       </div>
       <div id="battleScreenRightSide">
-        <div id="minion" class="fighterInfo" v-if="currentPhase > 2">
-          <h5>Here You can see your Minion</h5>
+        <div id="minion" class="fighterInfo" v-if="currentPhase > 3">
+          <h5>Here You can see your Opponent</h5>
           <div class="fighterPicture">
             Here Will be his picture
           </div>
           <ul>
             <li>
               strenght:
-              <span class="green"> </span>
+              <span class="green"> {{ selectedMinionStrength }}</span>
             </li>
             <li>
               Vitality:
+              <span class="red">
+                {{ selectedMinionVitality }}
+              </span>
             </li>
           </ul>
         </div>
@@ -112,18 +108,23 @@
 
 <script>
 import companions from "../api/companions";
+import minions from "../api/minions";
 
 export default {
   name: "battleSimulation",
   modules: ["companions"],
   data() {
     return {
-      companionList: companions,
-      currentPhase: 2,
+      currentPhase: 4,
       twilight: 0,
+      companionList: companions,
       selectedCompanionStrength: 0,
       selectedCompanionVitality: 0,
-      selectedCompanionImage: ""
+      selectedCompanionImage: "",
+      minionList: minions,
+      selectedMinionStrength: 0,
+      selectedMinionVitality: 0,
+      selectedMinionImage: ""
     };
   },
   methods: {
@@ -133,11 +134,15 @@ export default {
     },
     resetSimulation() {
       this.currentPhase = 0;
+      this.twilight = 0;
+      this.selectedCompanionStrength = 0;
+      this.selectedCompanionVitality = 0;
     },
     selectACompanion(companion) {
       this.selectedCompanionStrength = companion.strength;
       this.selectedCompanionVitality = companion.vitality;
       this.selectedCompanionImage = companion.image;
+      this.twilight = companion.twilight;
     }
   }
 };
