@@ -72,7 +72,6 @@
           <button class="button" v-if="currentPhase === 0" @click="nextPhase">
             Start Simulation
           </button>
-
           <button
             v-if="currentPhase !== 0"
             class="button"
@@ -80,13 +79,64 @@
           >
             Reset Simulation
           </button>
+          <button
+            v-if="currentPhase === 5"
+            @click="
+              startBattle();
+              nextPhase();
+            "
+          >
+            Start Battle
+          </button>
+          <div id="battleResult" v-if="currentPhase === 6">
+            <h2>Here is the conclusion of the battle and an animation</h2>
+            <h2>
+              Conclusion:
+              {{ result }}
+            </h2>
+            <img :src="resultGif" alt="resultGif" />
+            <button @click="nextPhase">Continue to the next battle</button>
+            <button
+              v-if="currentPhase !== 0"
+              class="button"
+              @click="resetSimulation"
+            >
+              Reset Simulation
+            </button>
+          </div>
         </div>
       </div>
       <div id="battleScreenRightSide">
+        <div id="selectYourOpponent" v-if="currentPhase === 3">
+          <div v-for="(minion, m) in minionList" :key="m">
+            <img :src="minion.image" alt="minion image" />
+            <div class="minionData">
+              <p>
+                strength:
+                <span class="green">
+                  {{ minion.strength }}
+                </span>
+              </p>
+              <p>
+                vitality:
+                <span class="red">
+                  {{ minion.vitality }}
+                </span>
+              </p>
+              <p>
+                twilight:
+                {{ minion.twilight }}
+              </p>
+              <button @click="selectAnOpponent(minion)">
+                Select an Opponent
+              </button>
+            </div>
+          </div>
+        </div>
         <div id="minion" class="fighterInfo" v-if="currentPhase > 3">
           <h5>Here You can see your Opponent</h5>
           <div class="fighterPicture">
-            Here Will be his picture
+            <img :src="selectedMinionImage" alt="" />
           </div>
           <ul>
             <li>
@@ -100,6 +150,9 @@
               </span>
             </li>
           </ul>
+          <button v-if="currentPhase === 4" @click="nextPhase">
+            Complete Selection
+          </button>
         </div>
       </div>
     </div>
@@ -115,7 +168,7 @@ export default {
   modules: ["companions"],
   data() {
     return {
-      currentPhase: 4,
+      currentPhase: 0,
       twilight: 0,
       companionList: companions,
       selectedCompanionStrength: 0,
@@ -124,13 +177,17 @@ export default {
       minionList: minions,
       selectedMinionStrength: 0,
       selectedMinionVitality: 0,
-      selectedMinionImage: ""
+      selectedMinionImage: "",
+      result: "",
+      resultGif: ""
     };
   },
   methods: {
     nextPhase() {
-      const phase = this.currentPhase + 1;
-      return (this.currentPhase = phase);
+      if (this.currentPhase <= 5) {
+        const phase = this.currentPhase + 1;
+        return (this.currentPhase = phase);
+      } else this.currentPhase = 1;
     },
     resetSimulation() {
       this.currentPhase = 0;
@@ -143,6 +200,45 @@ export default {
       this.selectedCompanionVitality = companion.vitality;
       this.selectedCompanionImage = companion.image;
       this.twilight = companion.twilight;
+    },
+    selectAnOpponent(minion) {
+      if (minion.twilight < this.twilight + 1) {
+        this.selectedMinionStrength = minion.strength;
+        this.selectedMinionVitality = minion.vitality;
+        this.selectedMinionImage = minion.image;
+        this.twilight = this.twilight - minion.twilight;
+        this.currentPhase = this.currentPhase + 1;
+      } else return;
+    },
+    startBattle() {
+      if (
+        this.selectedMinionStrength >= 2 * this.selectedCompanionStrength ||
+        this.selectedCompanionStrength === 0
+      ) {
+        this.result = "You completely lose the Battle";
+        this.resultGif =
+          "https://thumbs.gfycat.com/LeftExcitableAfricanaugurbuzzard-size_restricted.gif";
+        return;
+      } else if (this.selectedMinionStrength > this.selectedCompanionStrength) {
+        this.selectedCompanionVitality = this.selectedCompanionVitality - 1;
+        if (this.selectedCompanionVitality === 0) {
+          this.result = "You completely lose the Battle";
+          this.resultGif =
+            "https://thumbs.gfycat.com/LeftExcitableAfricanaugurbuzzard-size_restricted.gif";
+        } else {
+          this.result = "You survive, but you are wounded";
+          this.resultGif =
+            "https://thumbs.gfycat.com/FlawedPracticalHalicore-small.gif";
+        }
+        return;
+      } else if (
+        this.selectedCompanionStrength >= 2 * this.selectedMinionStrength ||
+        this.selectedMinionStrength === 0
+      ) {
+        (this.result = "You completely win the Battle"),
+          (this.resultGif =
+            "https://thumbs.gfycat.com/WarmheartedCornyJaeger-max-1mb.gif");
+      }
     }
   }
 };
@@ -199,16 +295,6 @@ export default {
     #battleScreenLeftSide {
       background: lightcyan;
       flex: 2;
-      #companionsList {
-        display: flex;
-        flex-direction: column;
-        img {
-          float: left;
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-        }
-      }
     }
     ul {
       width: 100%;
@@ -226,5 +312,25 @@ export default {
     color: red;
     background: #fff;
   }
+}
+#companionsList,
+#selectYourOpponent {
+  display: flex;
+  flex-direction: column;
+  img {
+    float: left;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+}
+#battleResult {
+  width: 80%;
+  height: 80%;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  z-index: 500;
+  background: lightgoldenrodyellow;
 }
 </style>
