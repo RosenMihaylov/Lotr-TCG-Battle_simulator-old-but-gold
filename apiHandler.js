@@ -47,6 +47,29 @@ app.post("/api/companions", (req, res) => {
   res.send(companions);
 });
 
+//update a companion
+app.put("/api/companions/:id", (req, res) => {
+  const companion = companions.find(c => c.id === parseInt(req.params.id));
+  if (!companion) res.status(404).send(`The companion with id was not found`);
+
+  const result = validateCompanion(req.body);
+  if (result.error)
+    return res.status(400).send(result.error.details[0].message);
+
+  companion.name = req.body.name;
+  res.send(companion);
+});
+
+function validateCompanion(companion) {
+  const schema = {
+    name: Joi.string()
+      .min(3)
+      .required()
+  };
+
+  return Joi.validate(companion, schema);
+}
+
 // /api/companions
 app.get("/api/companions/:id", (req, res) => {
   const companion = companions.find(c => c.id === parseInt(req.params.id));
