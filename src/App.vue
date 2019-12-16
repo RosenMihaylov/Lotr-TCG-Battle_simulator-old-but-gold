@@ -142,16 +142,7 @@ export default {
       }
     }
   }
-  .git {
-    text-decoration: none;
-    color: #42b983;
-
-    @include easeOut(all, 0.3s);
-
-    &:hover {
-      color: darken(#42b983, 50);
-    }
-  }
+  
 }
 
 .button {
