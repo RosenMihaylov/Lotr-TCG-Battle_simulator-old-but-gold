@@ -232,12 +232,16 @@ export default {
         }
         return;
       } else if (
-        this.selectedCompanionStrength >= 2 * this.selectedMinionStrength ||
+        this.selectedCompanionStrength > 2 * this.selectedMinionStrength ||
         this.selectedMinionStrength === 0
       ) {
         (this.result = "You completely win the Battle"),
           (this.resultGif =
             "https://thumbs.gfycat.com/WarmheartedCornyJaeger-max-1mb.gif");
+      } else {
+        (this.result = "You barely win, but the opponent lives"),
+          (this.resultGif =
+            "https://thumbs.gfycat.com/ImportantBrilliantElectriceel-size_restricted.gif");
       }
     }
   }
