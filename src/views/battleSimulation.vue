@@ -3,21 +3,55 @@
     <h2>This is a battle simulation</h2>
     <div id="batttleScreen">
       <div id="battleScreenLeftSide">
-        <div id="companion" class="fighterInfo" v-if="currentPhase > 1">
+        <div id="companionsList" v-if="currentPhase === 1">
+          <h2>click to chose a companion</h2>
+          <div
+            class="selectionWindow"
+            v-for="(companion, c) in companionList"
+            :key="c"
+          >
+            <img :src="companion.image" alt="img" />
+            <div class="companionData">
+              <p>
+                Strenght:
+                {{ companion.strength }}
+              </p>
+              <p>
+                Vitality:
+                {{ companion.vitality }}
+              </p>
+            </div>
+            <button
+              class="button"
+              @click="
+                nextPhase();
+                selectACompanion(companion);
+              "
+            >
+              Select a Companion
+            </button>
+          </div>
+        </div>
+        <div
+          id="selectedCompanionInfo"
+          class="fighterInfo"
+          v-if="currentPhase > 1"
+        >
           <h5>Here You can see your Companion</h5>
           <div class="fighterPicture">
-            Here Will be his picture
+            <img
+              :src="selectedCompanionImage"
+              alt="selected companion picture"
+            />
           </div>
           <ul>
             <li>
-              strenght:
-              <span class="green">
-                {{ selectedCompanion.strenght }}
-              </span>
+              Strenght:
+              {{ selectedCompanionStrength }}
             </li>
             <li>
               Vitality:
-              <span class="red"> {{ selectedCompanion.Vitality }}</span>
+              {{ selectedCompanionVitality }}
             </li>
           </ul>
         </div>
@@ -28,15 +62,23 @@
           <span class="green">{{ twilight }}</span>
         </h3>
         <div id="commands">
-          <button
-            class="button"
-            v-if="currentPhase === ''"
-            @click="startSimulation"
-          >
+          <button class="button" v-if="currentPhase === 0" @click="nextPhase">
             Start Simulation
           </button>
-          <button class="button" v-else-if="currentPhase === 'fellowship'">
-            Select a Companion
+
+          <button
+            class="button"
+            v-else-if="currentPhase === '2'"
+            @click="nextPhase"
+          >
+            Select his Items
+          </button>
+          <button
+            class="button"
+            v-else-if="currentPhase === '3'"
+            @click="nextPhase"
+          >
+            Select his Items
           </button>
           <button
             v-if="currentPhase !== ''"
@@ -56,13 +98,10 @@
           <ul>
             <li>
               strenght:
-              <span class="green">
-                {{ selectedMinion.strenght }}
-              </span>
+              <span class="green"> </span>
             </li>
             <li>
               Vitality:
-              <span class="red"> {{ selectedMinion.Vitality }}</span>
             </li>
           </ul>
         </div>
@@ -72,50 +111,33 @@
 </template>
 
 <script>
+import companions from "../api/companions";
+
 export default {
   name: "battleSimulation",
+  modules: ["companions"],
   data() {
     return {
-      currentPhase: "",
-      phases: {
-        1: "Fellowhip",
-        2: "Shadow",
-        3: "Maneuver",
-        4: "Archery",
-        5: "Normal Battle",
-        6: "Fierce Battle"
-      },
+      companionList: companions,
+      currentPhase: 2,
       twilight: 0,
-      selectedCompanion: {
-        image: "",
-        strenght: 0,
-        Vitality: 0,
-        FellowshipSkill: "",
-        ManeuverSkill: "",
-        ArcherySkill: "",
-        BattleSkill: "",
-        MeleeWeapon: "",
-        RangedWeapon: ""
-      },
-      selectedMinion: {
-        image: "",
-        strenght: 0,
-        Vitality: 0,
-        ShadowSkill: "",
-        ManeuverSkill: "",
-        ArcherySkill: "",
-        BattleSkill: "",
-        MeleeWeapon: "",
-        RangedWeapon: ""
-      }
+      selectedCompanionStrength: 0,
+      selectedCompanionVitality: 0,
+      selectedCompanionImage: ""
     };
   },
   methods: {
-    startSimulation() {
-      this.currentPhase = "fellowship";
+    nextPhase() {
+      const phase = this.currentPhase + 1;
+      return (this.currentPhase = phase);
     },
     resetSimulation() {
-      this.currentPhase = "";
+      this.currentPhase = 0;
+    },
+    selectACompanion(companion) {
+      this.selectedCompanionStrength = companion.strength;
+      this.selectedCompanionVitality = companion.vitality;
+      this.selectedCompanionImage = companion.image;
     }
   }
 };
@@ -149,6 +171,7 @@ export default {
         cursor: pointer;
       }
     }
+
     .fighterInfo {
       display: flex;
       flex-direction: column;
@@ -160,6 +183,7 @@ export default {
         img {
           height: 100%;
           width: 100%;
+          object-fit: cover;
         }
       }
     }
@@ -170,6 +194,16 @@ export default {
     #battleScreenLeftSide {
       background: lightcyan;
       flex: 2;
+      #companionsList {
+        display: flex;
+        flex-direction: column;
+        img {
+          float: left;
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+        }
+      }
     }
     ul {
       width: 100%;

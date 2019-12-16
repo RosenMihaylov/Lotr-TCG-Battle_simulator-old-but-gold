@@ -1,23 +1,9 @@
 const Joi = require("joi");
 const express = require("express");
 const app = express();
+const companions = require("./Companions");
 
 app.use(express.json());
-
-const companions = [
-  {
-    id: 1,
-    name: `Aragorn`
-  },
-  {
-    id: 2,
-    name: `Legolas`
-  },
-  {
-    id: 3,
-    name: `Gandalf`
-  }
-];
 
 app.get(`/`, (req, res) => {
   res.send("hello world");

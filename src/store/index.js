@@ -1,19 +1,11 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export default ({
-  state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
-  getters: {
-
-  }
-})
+export default {
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {}
+};

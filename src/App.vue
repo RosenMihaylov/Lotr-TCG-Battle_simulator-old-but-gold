@@ -46,7 +46,7 @@ export default {
       }
     }
   },
-  computed: mapGetters(["allColors"])
+  computed: mapGetters(["allCompanions"])
 };
 </script>
 
@@ -142,7 +142,6 @@ export default {
       }
     }
   }
-  
 }
 
 .button {
