@@ -95,7 +95,9 @@
               {{ result }}
             </h2>
             <img :src="resultGif" alt="resultGif" />
-            <button @click="nextPhase">Continue to the next battle</button>
+            <button @click="continueToNextBattle">
+              Continue to the next battle
+            </button>
             <button
               v-if="currentPhase !== 0"
               class="button"
@@ -213,11 +215,13 @@ export default {
     startBattle() {
       if (
         this.selectedMinionStrength >= 2 * this.selectedCompanionStrength ||
-        this.selectedCompanionStrength === 0
+        this.selectedCompanionStrength <= 0 ||
+        this.selectedCompanionVitality <= 0
       ) {
         this.result = "You completely lose the Battle";
         this.resultGif =
           "https://thumbs.gfycat.com/LeftExcitableAfricanaugurbuzzard-size_restricted.gif";
+        this.selectedMinionVitality = 0;
         return;
       } else if (this.selectedMinionStrength > this.selectedCompanionStrength) {
         this.selectedCompanionVitality = this.selectedCompanionVitality - 1;
@@ -232,7 +236,7 @@ export default {
         }
         return;
       } else if (
-        this.selectedCompanionStrength > 2 * this.selectedMinionStrength ||
+        this.selectedCompanionStrength >= 2 * this.selectedMinionStrength ||
         this.selectedMinionStrength === 0
       ) {
         (this.result = "You completely win the Battle"),
@@ -243,6 +247,9 @@ export default {
           (this.resultGif =
             "https://thumbs.gfycat.com/ImportantBrilliantElectriceel-size_restricted.gif");
       }
+    },
+    continueToNextBattle() {
+      this.currentPhase = 1;
     }
   }
 };
