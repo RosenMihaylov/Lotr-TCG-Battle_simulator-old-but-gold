@@ -28,16 +28,8 @@ app.get("/api/companions", (req, res) => {
 });
 
 app.post("/api/companions", (req, res) => {
-  const schema = {
-    name: Joi.string()
-      .min(3)
-      .required()
-  };
-
-  const result = Joi.validate(req.body, schema);
-
-  if (result.error)
-    return res.status(400).send(result.error.details[0].message);
+  const { error } = validateCompanion(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
   const companion = {
     id: companions.length + 1,
@@ -50,14 +42,13 @@ app.post("/api/companions", (req, res) => {
 //update a companion
 app.put("/api/companions/:id", (req, res) => {
   const companion = companions.find(c => c.id === parseInt(req.params.id));
-  if (!companion) res.status(404).send(`The companion with id was not found`);
+  if (!companion) return res.status(400).send("no");
 
-  const result = validateCompanion(req.body);
-  if (result.error)
-    return res.status(400).send(result.error.details[0].message);
+  const { error } = validateCompanion(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
   companion.name = req.body.name;
-  res.send(companion);
+  res.send(companions);
 });
 
 function validateCompanion(companion) {
