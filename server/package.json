@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js src/app.js --exec 'npm run lint && node'",
-    "lint": ".node_modules/.bin/eslint **/*.js"
+    "start": "nodemon src/app.js --exec  \"npm run lint && node\"",
+    "lint": "eslint src/**/*.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^6.7.2",
     "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.0.1"
   }
 }
