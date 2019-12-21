@@ -11,6 +11,7 @@
         class="git"
         >Link to github</a
       >
+      <router-link to="/register">Register</router-link>
       <div id="navigation" :class="{ active: active }">
         <div id="responsiveNavigation">
           <router-link to="/">Home</router-link> |
