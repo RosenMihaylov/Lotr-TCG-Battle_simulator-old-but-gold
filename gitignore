@@ -20,3 +20,6 @@ yarn-error.log*
 *.sln
 *.sw?
 dist/index.html
+
+client/node-node_modules
+server/node-modules
